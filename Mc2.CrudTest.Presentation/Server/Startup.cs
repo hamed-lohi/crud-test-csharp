@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Infrastructure;
 
 namespace Mc2.CrudTest.Presentation.Server
 {
@@ -22,6 +23,11 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");  //Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext(connectionString);
+
+            //services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
