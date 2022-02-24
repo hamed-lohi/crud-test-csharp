@@ -9,6 +9,8 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
+            builder.Ignore(e => e.DomainEvents);
+
             builder.Property(t => t.Firstname)
                 .HasMaxLength(100)
                 .IsRequired();

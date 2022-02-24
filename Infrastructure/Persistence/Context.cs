@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Common.Interfaces;
 using Domain.Common;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Persistence
 {
 
-    public class Context : DbContext
+    public class Context : DbContext, IApplicationDbContext
     {
 
         public Context(
