@@ -8,8 +8,4 @@
     <PackageReference Include="libphonenumber-csharp" Version="8.12.43" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

@@ -1,10 +1,11 @@
 ﻿using Domain.Common;
 using PhoneNumbers;
 using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
-    public class Customer: AuditableEntity
+    public class Customer: AuditableEntity, IHasDomainEvent
     {
         public Customer
         (
@@ -16,13 +17,7 @@ namespace Domain.Entities
             string bankAccountNumber
         )
         {
-            Firstname = firstname;
-            Lastname = lastname;
-            DateOfBirth = dateOfBirth;
-            PhoneNumber = phoneNumber;
-            Email = email;
-            BankAccountNumber = bankAccountNumber;
-
+            SetProperties(firstname, lastname, dateOfBirth, phoneNumber, email, bankAccountNumber);
             //Activate();
         }
 
@@ -52,15 +47,15 @@ namespace Domain.Entities
                 //var smsShortNumber = "83835";
                 PhoneNumber phoneNumber = null;
 
-                try
-                {
+                //try
+                //{
                     phoneNumber = phoneNumberUtil.Parse(value, null);
                     //PhoneNumber swissNumberProto = phoneUtil.parse(swissNumberStr, "CH");
-                }
-                catch (NumberParseException e)
-                {
-                    throw new Exception("NumberParseException was thrown: " + e.Message);
-                }
+                //}
+                //catch (NumberParseException e)
+                //{
+                //    throw new Exception("NumberParseException was thrown: " + e.Message);
+                //}
 
                 var isValid = phoneNumberUtil.IsValidNumber(phoneNumber);
                 
@@ -73,6 +68,32 @@ namespace Domain.Entities
             }
         }
 
+        public void SetProperties
+            (
+                string firstname,
+                string lastname,
+                DateTime dateOfBirth,
+                string phoneNumber,
+                string email,
+                string bankAccountNumber
+            )
+        {
+            Firstname = firstname;
+            Lastname = lastname;
+            DateOfBirth = dateOfBirth;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            BankAccountNumber = bankAccountNumber;
+        }
+
+        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
+
+        public override string ToString()
+        {
+            return $@"{Firstname} - {Lastname}\n
+                   Date Of Birth: {DateOfBirth}\n
+                   Email: {Email}";
+        }
 
         //public void Inactivate()
         //{
@@ -84,5 +105,6 @@ namespace Domain.Entities
         //    Name = new Name(firstName, lastName);
         //    Email = new Email(email);
         //}
+
     }
 }
