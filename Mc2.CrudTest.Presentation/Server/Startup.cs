@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Infrastructure;
+using Application;
 
 namespace Mc2.CrudTest.Presentation.Server
 {
@@ -21,11 +22,27 @@ namespace Mc2.CrudTest.Presentation.Server
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddApplication();
+
             services.AddControllersWithViews();
+
+            //services.AddControllersWithViews()
+            //    .AddJsonOptions(options =>
+            //    {
+            //        //options.JsonSerializerOptions.Converters.Add(new NullableStructSerializerFactory());
+            //        //options.JsonSerializerOptions.Converters.Add(new PersonConverterWithTypeDiscriminator());
+            //        //options.JsonSerializerOptions.IgnoreNullValues = true;
+            //        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            //        //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            //        //options.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
+            //    });
+
             services.AddRazorPages();
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");  //Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext(connectionString);
+
+            
 
             //services.AddSwaggerGen();
         }

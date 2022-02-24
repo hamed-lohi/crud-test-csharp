@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Shared", "Mc2.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Presentation.Server", "Mc2.CrudTest.Presentation\Server\Mc2.CrudTest.Presentation.Server.csproj", "{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{93FC150C-6CFB-43F5-A770-403C07644B8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{93FC150C-6CFB-43F5-A770-403C07644B8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{BD3C428E-07C5-46B1-8930-A51FAF227CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{BD3C428E-07C5-46B1-8930-A51FAF227CC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{92B452DD-0ED5-471F-AD48-E01B8B853CFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{BD3C428E-07C5-46B1-8930-A51FAF227CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3C428E-07C5-46B1-8930-A51FAF227CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD3C428E-07C5-46B1-8930-A51FAF227CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B452DD-0ED5-471F-AD48-E01B8B853CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B452DD-0ED5-471F-AD48-E01B8B853CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B452DD-0ED5-471F-AD48-E01B8B853CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B452DD-0ED5-471F-AD48-E01B8B853CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

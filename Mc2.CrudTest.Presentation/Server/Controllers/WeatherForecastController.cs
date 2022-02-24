@@ -10,7 +10,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : ApiControllerBase //ControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
 

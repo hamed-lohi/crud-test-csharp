@@ -1,0 +1,49 @@
+﻿@page "/customer"
+@using Application.Common.Models
+@using Application.Customers.Queries.GetCustomersWithPagination
+@inject HttpClient _http
+
+<h1>Weather customer</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (_forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (CustomerBriefDto forecast in _forecasts)
+            {
+                <tr>
+                    <td>@forecast.DateOfBirth.ToShortDateString()</td>
+                    <td>@forecast.Id.ToString()</td>
+                    <td>@forecast.Firstname</td>
+                    <td>@forecast.Lastname</td>
+                    <td>@forecast.Email</td>
+                    <td>@forecast.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<CustomerBriefDto> _forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _forecasts = await _http.GetFromJsonAsync<List<CustomerBriefDto>>("customers");
+    }
+
+}
