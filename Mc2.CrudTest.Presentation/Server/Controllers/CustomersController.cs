@@ -2,6 +2,7 @@
 using Application.Customers.Commands.CreateCustomer;
 using Application.Customers.Commands.DeleteCustomer;
 using Application.Customers.Commands.UpdateCustomer;
+using Application.Customers.Queries.GetCustomerById;
 //using Application.Customers.Commands.UpdateTodoItemDetail;
 using Application.Customers.Queries.GetCustomersWithPagination;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace Mc2.CrudTest.Presentation.Server.Controllers
 {
-
-    [ApiController]
-    [Route("[controller]")]
     public class CustomersController : ApiControllerBase
     {
         //[HttpGet]
@@ -22,12 +20,22 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         //}
 
         [HttpGet]
-        public async Task<List<CustomerBriefDto>> GetCustomersWithPagination([FromQuery] GetCustomersWithPaginationQuery query)
+        public async Task<List<CustomerMinDto>> GetCustomersWithPagination([FromQuery] GetCustomersWithPaginationQuery query)
         {
             //return new List<CustomerBriefDto> { new CustomerBriefDto { Id = 0, Firstname = "hhhh" } };
             //var dd = new PaginatedList()
             var temp =  await Mediator.Send(query);
             return temp.Items;
+        }
+
+        //[HttpGet]
+        [HttpGet("{id}")]
+        public async Task<CustomerDto> GetCustomerById(long id)
+        {
+            //return new List<CustomerBriefDto> { new CustomerBriefDto { Id = 0, Firstname = "hhhh" } };
+            //var dd = new PaginatedList()
+            var temp = await Mediator.Send(new GetCustomerByIdQuery() { Id = id });
+            return temp;
         }
 
         [HttpPost]
@@ -36,18 +44,18 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             return await Mediator.Send(command);
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> Update(int id, UpdateCustomerCommand command)
-        //{
-        //    if (id != command.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut]
+        public async Task<ActionResult> Update(UpdateCustomerCommand command)
+        {
+            //if (id != command.Id)
+            //{
+            //    return BadRequest();
+            //}
 
-        //    await Mediator.Send(command);
+            await Mediator.Send(command);
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
         //[HttpPut("[action]")]
         //public async Task<ActionResult> UpdateItemDetails(int id, UpdateCustomerDetailCommand command)

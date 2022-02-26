@@ -1,0 +1,84 @@
+﻿@page "/customer/add"
+@page "/customer/edit/{id:int}"
+
+@using Application.Customers.Commands.CreateCustomer
+@using Application.Customers.Commands.UpdateCustomer
+
+@inject HttpClient _http
+@inject NavigationManager NavigationManager
+
+<h1>@Title Customer</h1>
+<hr />
+
+<EditForm Model="@customer" OnValidSubmit="SaveCustomer">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">First Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="customer.Firstname" />
+        </div>
+        <ValidationMessage For="@(() => customer.Firstname)" />
+    </div>
+    <div class="mb-3">
+        <label for="Address" class="form-label">Last Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="customer.Lastname" />
+        </div>
+        <ValidationMessage For="@(() => customer.Lastname)" />
+    </div>
+    <div class="mb-3">
+        <label for="Cellnumber" class="form-label">Email</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="customer.Email" />
+        </div>
+        <ValidationMessage For="@(() => customer.Email)" />
+    </div>
+    <div class="mb-3">
+        <label for="Emailid" class="form-label">Phone Number</label>
+        <div class="col-md-4">
+            <InputText class="form-control" placeholder="+989121005500" @bind-Value="customer.PhoneNumber" />
+        </div>
+        <ValidationMessage For="@(() => customer.PhoneNumber)" />
+    </div>
+    <div class="mb-3">
+        <label for="Emailid" class="form-label">Bank Account Number</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="customer.BankAccountNumber" />
+        </div>
+        <ValidationMessage For="@(() => customer.BankAccountNumber)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+@code {
+    [Parameter]
+    public int id { get; set; }
+    protected string Title = "Add";
+    protected UpdateCustomerCommand customer = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (id != 0)
+        {
+            Title = "Edit";
+            customer = await _http.GetFromJsonAsync<UpdateCustomerCommand>("api/Customers/" + id);
+        }
+    }
+    protected async Task SaveCustomer()
+    {
+        if (customer.Id != 0)
+        {
+            await _http.PutAsJsonAsync("api/Customers", customer);
+        }
+        else
+        {
+            await _http.PostAsJsonAsync("api/Customers", customer);
+        }
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/customer");
+    }
+}
