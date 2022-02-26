@@ -12,34 +12,36 @@ namespace Application.Customers.Commands.DeleteCustomer
     public class DeleteCustomerCommand : IRequest
     {
         public long Id { get; set; }
-    }
 
-    public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteCustomerCommand>
-    {
-        private readonly IApplicationDbContext _context;
 
-        public DeleteTodoItemCommandHandler(IApplicationDbContext context)
+        public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteCustomerCommand>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<Unit> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.Customers
-                .FindAsync(new object[] { request.Id }, cancellationToken);
-
-            if (entity == null)
+            public DeleteTodoItemCommandHandler(IApplicationDbContext context)
             {
-                throw new NotFoundException(nameof(Customer), request.Id);
+                _context = context;
             }
 
-            _context.Customers.Remove(entity);
+            public async Task<Unit> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+            {
+                var entity = await _context.Customers
+                    .FindAsync(new object[] { request.Id }, cancellationToken);
 
-            entity.DomainEvents.Add(new CustomerDeletedEvent(entity));
+                if (entity == null)
+                {
+                    throw new NotFoundException(nameof(Customer), request.Id);
+                }
 
-            await _context.SaveChangesAsync(cancellationToken);
+                _context.Customers.Remove(entity);
 
-            return Unit.Value;
+                entity.DomainEvents.Add(new CustomerDeletedEvent(entity));
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return Unit.Value;
+            }
         }
+
     }
 }

@@ -5,16 +5,9 @@ using System;
 namespace Application.Customers.Queries.GetCustomersWithPagination
 {
 
-    public class CustomerBriefDto : IMapFrom<Customer>
+    public class CustomerMinDto : IMapFrom<Customer>
     {
         public long Id { get; set; }
-
-        //public int ListId { get; set; }
-
-        //public string Firstname { get; set; }
-
-        //public bool Done { get; set; }
-
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime DateOfBirth { get; set; }

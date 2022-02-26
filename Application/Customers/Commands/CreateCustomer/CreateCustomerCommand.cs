@@ -31,28 +31,31 @@ namespace Application.Customers.Commands.CreateCustomer
 
         [CreditCard(ErrorMessage = "Account Number is invalid!")]
         public string BankAccountNumber { get; set; }
-    }
 
-    public class CreateTodoItemCommandHandler : IRequestHandler<CreateCustomerCommand, long>
-    {
-        private readonly IApplicationDbContext _context;
 
-        public CreateTodoItemCommandHandler(IApplicationDbContext context)
+
+        public class CreateTodoItemCommandHandler : IRequestHandler<CreateCustomerCommand, long>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<long> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
-        {
-            var entity = new Customer(request.Firstname, request.Lastname, request.DateOfBirth, request.PhoneNumber, request.Email, request.BankAccountNumber);
+            public CreateTodoItemCommandHandler(IApplicationDbContext context)
+            {
+                _context = context;
+            }
 
-            entity.DomainEvents.Add(new CustomerCreatedEvent(entity));
+            public async Task<long> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+            {
+                var entity = new Customer(request.Firstname, request.Lastname, request.DateOfBirth, request.PhoneNumber, request.Email, request.BankAccountNumber);
 
-            _context.Customers.Add(entity);
+                entity.DomainEvents.Add(new CustomerCreatedEvent(entity));
 
-            await _context.SaveChangesAsync(cancellationToken);
+                _context.Customers.Add(entity);
 
-            return entity.Id;
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return entity.Id;
+            }
         }
     }
+    
 }

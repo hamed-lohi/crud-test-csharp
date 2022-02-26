@@ -14,10 +14,6 @@ namespace Application.Customers.Commands.UpdateCustomer
     {
         public long Id { get; set; }
 
-        //public string? Title { get; set; }
-
-        //public bool Done { get; set; }
-
         [StringLength(100)]
         public string Firstname { get; set; }
 
@@ -36,32 +32,35 @@ namespace Application.Customers.Commands.UpdateCustomer
 
         [CreditCard(ErrorMessage = "Account Number is invalid!")]
         public string BankAccountNumber { get; set; }
-    }
 
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
-    {
-        private readonly IApplicationDbContext _context;
 
-        public UpdateCustomerCommandHandler(IApplicationDbContext context)
+        public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
         {
-            _context = context;
-        }
+            private readonly IApplicationDbContext _context;
 
-        public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.Customers
-                .FindAsync(new object[] { request.Id }, cancellationToken);
-
-            if (entity == null)
+            public UpdateCustomerCommandHandler(IApplicationDbContext context)
             {
-                throw new NotFoundException(nameof(Customer), request.Id);
+                _context = context;
             }
 
-            entity.SetProperties(request.Firstname, request.Lastname, request.DateOfBirth, request.PhoneNumber, request.Email, request.BankAccountNumber);
+            public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+            {
+                var entity = await _context.Customers
+                    .FindAsync(new object[] { request.Id }, cancellationToken);
 
-            await _context.SaveChangesAsync(cancellationToken);
+                if (entity == null)
+                {
+                    throw new NotFoundException(nameof(Customer), request.Id);
+                }
 
-            return Unit.Value;
+                entity.SetProperties(request.Firstname, request.Lastname, request.DateOfBirth, request.PhoneNumber, request.Email, request.BankAccountNumber);
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return Unit.Value;
+            }
         }
+
     }
+    
 }
