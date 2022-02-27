@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+    web:
+        image: crud_web
+        container_name: crud_web
+        restart: on-failure
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            - "ConnectionStrings__DefaultConnection=Server=database;Database=CrudTest;User Id=sa;Password=P4ssW0rd!;TrustServerCertificate=True;MultipleActiveResultSets=true"
+        depends_on:
+            - database
+        networks:
+            - network
+        ports:
+            - 8090:80
+    database:
+        image: mcr.microsoft.com/mssql/server
+        container_name: crud_database
+        restart: on-failure
+        environment:
+            - "ACCEPT_EULA=Y"
+            - "SA_PASSWORD=P4ssW0rd!"
+        networks:
+            - network
+        ports:
+            - 1433:1433
+        volumes:
+            - database:/var/opt/mssql
+networks:
+    network:
+volumes:
+    database:
