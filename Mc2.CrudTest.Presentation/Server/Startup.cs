@@ -39,7 +39,7 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddRazorPages();
 
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");  //Configuration.GetConnectionString("DefaultConnection");
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext(connectionString);
 
             
