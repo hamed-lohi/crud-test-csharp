@@ -20,6 +20,7 @@ Customer {
 - [DDD](https://en.wikipedia.org/wiki/Domain-driven_design)
 - [Clean architecture](https://github.com/jasontaylordev/CleanArchitecture)
 - [CQRS](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation#Command_query_responsibility_separation) pattern ([Event sourcing](https://en.wikipedia.org/wiki/Domain-driven_design#Event_sourcing)).
+- [Mediator](https://en.wikipedia.org/wiki/Mediator_pattern#:~:text=In%20software%20engineering%2C%20the%20mediator,often%20consist%20of%20many%20classes.)
 
 ### Validations
 validate fields
